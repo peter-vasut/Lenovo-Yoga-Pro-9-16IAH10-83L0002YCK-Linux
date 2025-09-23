@@ -25,6 +25,8 @@ I'm using **Garuda Linux Dr460nized** gaming edition (KDE). I've tried the non-g
 | Power usage | 🟠 not great, not terrible (I'm getting around 16W when web-browsing) |
 | SD card reader | 🟢 works |
 | [Sound](#sound) | 🟢 works (after manual tweak) |
+| Wifi | 🟢 works |
+| Bluetooth | 🟢 works |
 
 ### Webcam
 
