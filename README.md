@@ -34,7 +34,9 @@ If the webcam shows just black image, verify that the hardware switch located on
 
 ### Touchscreen
 
-I don't see any touchscreens in settings and I couldn't identify any device that could possibly indicate touchscreen. It's possible you need some magic I2C or ACPI calls to turn it on.
+I don't see any touchscreens in settings and I couldn't identify any device that could possibly indicate touchscreen. (Using kernel 6.16.7.)
+
+It appears there exists working [patch](https://bugzilla.kernel.org/show_bug.cgi?id=220567). (I haven't tested it myself.) It's possible that in future kernel versions the touchscreen will be fixed.
 
 ### HDR and color management
 
@@ -77,7 +79,7 @@ More experimentation is needed.
 
 ### Sound
 
-Out of the box there are only tweeters and the sound is terrible. To fix this use script from [here](https://github.com/maximmaxim345/yoga_pro_9i_gen9_linux?tab=readme-ov-file#speakers). Note that the script for the older version of the laptop expected 3 i2c busses, this notebook shows 2. So you just need modify the script a bit and replace `3` with `2` at correct places.
+Out of the box there are only tweeters and the sound is terrible. To fix this use script from [here](https://github.com/maximmaxim345/yoga_pro_9i_gen9_linux?tab=readme-ov-file#speakers). Note that the script for the older version of the laptop expected 3 i2c busses, this laptop shows 2. So you just need modify the script a bit and replace `3` with `2` at correct places.
 
 <details>
 
