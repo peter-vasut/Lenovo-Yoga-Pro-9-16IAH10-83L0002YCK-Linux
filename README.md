@@ -12,14 +12,14 @@ I'm using **Garuda Linux Dr460nized** gaming edition (KDE). I've tried the non-g
 
 | Device | Status |
 | --- | --- |
-| Keyboard | 🟢 works |
+| [Keyboard](#keyboard) | 🟢 works |
+| [Keyboard backlight adjustment](#keyboard-backlight) | 🟢 works |
 | Touchpad | 🟢 works (on Garuda) |
 | [Webcam](#webcam) | 🟢 works |
 | Display | 🟢 works |
 | [Touchscreen](#touchscreen) | 🔴 not detected |
 | Brightness control | 🟢 works |
 | [HDR + color management](#hdr-and-color-management) | 🟠 HDR support not detected, see details below |
-| [Keyboard backlight adjustment](#keyboard-backlight) | 🟢 works |
 | [Switchable graphics](#switchable-graphics) | 🟠 pain |
 | Nvidia GPU | 🟢 works |
 | Power usage | 🟠 not great, not terrible (I'm getting around 16W when web-browsing) |
@@ -28,9 +28,38 @@ I'm using **Garuda Linux Dr460nized** gaming edition (KDE). I've tried the non-g
 | Wifi | 🟢 works |
 | Bluetooth | 🟢 works |
 
+### Keyboard
+
+Annoyingly, the keyboard doesn't have MENU key or right CONTROL, but it has the stupid copilot key. You can fix it like this:
+
+* Install `keyd` package.
+* `sudo systemctl enable --now keyd`
+* Edit `/etc/keyd/default.conf`:
+
+```
+[ids]
+
+*
+
+[main]
+f23+leftshift+leftmeta = overload(control, compose)
+```
+
+* `sudo keyd reload`
+
+After this pressing the copilot key will behave as the MENU key (similar to right-click, you can for example use this to easily apply spell-checker corrections, or access other functions without a mouse). Holding the button will act as holding a control key, so you can press keyboard shortcuts comfortably.
+
+Pressing Fn+Copilot shows contents of clipboard, which is nice behavior I don't intend to re-bind.
+
+You can use `libinput debug-events --show-keycodes` to show what keys are being pressed. Use this to help you define your own bindings and to verify they work.
+
+### Keyboard backlight
+
+Backlight is adjustable in software. Under the "brightness icon" on top statusbar (where you control also screen brightness), you can choose if the backlight is "off", "low" or "bright". When you adjust the backlight using `Fn+space`, it cycles between 4 modes: "off", "high for 30s", "low", "high". The second mode does not display any notification on screen and in the brightness settings it looks like the keyboard backlight is off.
+
 ### Webcam
 
-If the webcam shows just black image, verify that the hardware switch located on right side of the laptop is in correct position.
+If the webcam shows just black image, verify that the hardware privacy switch located on right side of the laptop is in correct position.
 
 ### Touchscreen
 
@@ -60,10 +89,6 @@ ylandvk "/path/to/video.mkv"`
 Note that using this process you'll be limited to 1000nits SDR brightness. I've also noticed slight banding in dark colors, I'm not sure if it's limitation of the panel, or the setup is incorrect and you don't get full bit depth, or it's just limitation of the media.
 
 I didn't try to play any HDR games, you can try looking at [this article](https://web.archive.org/web/20240703130440/https://planet.kde.org/xavers-blog-2023-12-18-an-update-on-hdr-and-color-management-in-kwin/), maybe it'll help, maybe it's outdated.
-
-### Keyboard backlight
-
-Backlight is adjustable in software. Under the "brightness icon" on top statusbar (where you control also screen brightness), you can choose if the backlight is "off", "low" or "bright". When you adjust the backlight using `Fn+space`, it cycles between 4 modes: "off", "high for 30s", "low", "high". The second mode does not display any notification on screen and in the brightness settings it looks like the keyboard backlight is off.
 
 ### Switchable graphics
 
@@ -174,3 +199,9 @@ done
 </details>
 
 I haven't noticed the need to re-run this script after suspending, so instead of creating `systemd` service I just added it to startup applications and it fixes sound when KDE starts.
+
+## Other issues
+
+* Kwin randomly crashes.
+    * Not sure if there is anything specific in my setup, or if the bug will manifest on this hardware.
+    * Bug report: [link](https://bugs.kde.org/show_bug.cgi?id=511880). If you don't encounter the same bug and you have same configuration as me, please contact me. If you experience the same bug and have additional info, use the KDE bug tracker.
