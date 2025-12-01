@@ -1,4 +1,4 @@
-# Lenovo Yoga Pro 9 16IAH10 (83L0002YCK) Linux tips and tricks
+# Running Garuda Linux on Lenovo Yoga Pro 9 16IAH10 (83L0002YCK)
 
 This repo documents my experience with Lenovo Yoga Pro 9 laptop on Linux and tips to make it work.
 
@@ -17,7 +17,7 @@ I'm using **Garuda Linux Dr460nized** gaming edition (KDE). I've tried the non-g
 | Touchpad | 🟢 works (on Garuda) |
 | [Webcam](#webcam) | 🟢 works |
 | Display | 🟢 works |
-| [Touchscreen](#touchscreen) | 🔴 not detected |
+| [Touchscreen](#touchscreen) | 🟠 requires kernel patch |
 | Brightness control | 🟢 works |
 | [HDR + color management](#hdr-and-color-management) | 🟠 HDR support not detected, see details below |
 | [Switchable graphics](#switchable-graphics) | 🟠 pain |
@@ -63,9 +63,9 @@ If the webcam shows just black image, verify that the hardware privacy switch lo
 
 ### Touchscreen
 
-I don't see any touchscreens in settings and I couldn't identify any device that could possibly indicate touchscreen. (Using kernel 6.16.7.)
+By default there are no touchscreens detected. Kernel 6.17.9, does not work with the touchscreen.
 
-It appears there exists working [patch](https://bugzilla.kernel.org/show_bug.cgi?id=220567). (I haven't tested it myself.) It's possible that in future kernel versions the touchscreen will be fixed.
+You can install [patch](https://bugzilla.kernel.org/show_bug.cgi?id=220567) using [this](https://amini-allight.org/post/patching-the-arch-linux-kernel) tutorial. The process itself is straight-forward, but the patch is for older kernel version, so you might need to modify it. If you are not programmer, you should probably wait untill the patch is merged.
 
 ### HDR and color management
 
