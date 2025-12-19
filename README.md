@@ -19,7 +19,7 @@ I'm using **Garuda Linux Dr460nized** gaming edition (KDE). I've tried the non-g
 | Display | 🟢 works |
 | [Touchscreen](#touchscreen) | 🟠 requires kernel patch |
 | Brightness control | 🟢 works |
-| [HDR + color management](#hdr-and-color-management) | 🟠 HDR support not detected, see details below |
+| [HDR + color management](#hdr-and-color-management) | 🟢 works (HDR requires fix) |
 | [Switchable graphics](#switchable-graphics) | 🟠 pain |
 | Nvidia GPU | 🟢 works |
 | Power usage | 🟠 not great, not terrible (I'm getting around 16W when web-browsing) |
@@ -70,23 +70,48 @@ You can install [patch](https://bugzilla.kernel.org/show_bug.cgi?id=220567) usin
 ### HDR and color management
 
 * Display reports it can support 1600nit brightness. (You can verify this using `cat /sys/class/drm/card0-eDP-2/edid | edid-decode`.)
-* KDE does not detect wide color gamut or HDR support (`kscreen-doctor -o`).
-* I have following error in boot logs, it might be related: `i915 0000:00:02.0: [drm] *ERROR* GT1: GSC proxy component didn't bind within the expected timeout`
+* Out of the box, KDE does not detect wide color gamut or HDR support (`kscreen-doctor -o`). By default the screen appears to be using the whole color gamut of the panel (as the colors look oversaturated).
 
-My current assumption is that intel GPU should handle the display, but the driver is buggy and does not work with the display. By default the screen appears to be using it's full color gamut.
+#### Simple workaround for oversaturated colors
 
-As a workaround, you can still go to KDE "Display Configuration" (right click on desktop) and choose `Color profile: Build-in`. This makes content way less oversaturated, it appears kwin uses RGB primaries from EDID data to convert colors in software. (I've roughly compared the color primaries reported with the advertised color-space capabilities, and it appears the values are correct. I didn't do any rigorous color calibration to verify this.)
+In case you don't need HDR support:
 
-To watch HDR movies, follow these steps:
+You can go to KDE "Display Configuration" (right click on desktop) and choose `Color profile: Build-in`. This makes content way less oversaturated, it appears kwin uses RGB primaries from EDID data to convert colors in software. (I've roughly compared the color primaries reported with the advertised color-space capabilities, and it appears the values are correct. I didn't do any rigorous color calibration to verify this.)
 
-* Check the `Enable EDR` setting.
-* Limit color resolution to 10 bit per pixel. (The panel reports ability to have 12bit colors, but for some reason KDE allows only 10. During my experimentation with switching graphics on and off I did notice one time that this menu offered 12bit, but I could not reproduce it. It does not matter much as most of the content is 10bit anyway and the hardware limits the tones probably more.)
+#### HDR fix
+
+Follow these steps to get proper HDR support.
+
+* Get EDID data: `cat /sys/class/drm/card1-eDP-1/edid > original.bin`
+* Fix EDID using [patch-edid.py](patch-edid.py).
+* Include fixed EDID binary file in initramfs:
+    * `sudo mkdir /lib/firmware/edid`
+    * `sudo cp edid-patched-hdr.bin /lib/firmware/edid/edid-hdr.bin`
+    * Create file `/etc/dracut.conf.d/edid-hdr.conf` with content `install_items+=" /lib/firmware/edid/edid-hdr.bin "`.
+    * `sudo dracut-rebuild`
+* Add following Linux boot option: `drm.edid_firmware=eDP-1:edid/edid-hdr.bin`
+    * Option 1: Use "Boot tools" in "Garuda Rani" (the GUI assistant that helps you with setup) - add the option at the beginning of the "Kernel parameters" field.
+    * Option 2:
+        * Update `/etc/default/grub`. Add the option to `GRUB_CMDLINE_LINUX_DEFAULT`.
+        * Run `sudo update-grub`.
+    * Note: In case the display is named differently, make sure to replace `eDP-1` with correct name.
+* Reboot.
+
+(Thanks goes to *agnostic* from Arch Linux forums, as the fix is heavily inspired by their [post](https://bbs.archlinux.org/viewtopic.php?pid=2277349#p2277349).)
+
+#### How to watch HDR content
+
+* Right-click on desktop -> Display settings:
+    * Check the `Enable EDR` or `Enable HDR` setting. (Which one you see depends on if you applied [HDR fix](#hdr-fix).)
+    * Verify that colour resolution is set to 10bit (the `Limit color resolution to` field).
+    * If you enabled HDR, I recommend using the "Calibrate HDR Brightness" wizard. I've set the maximum brightness to 2000 and SDR Brightness to 1000.
 * Install `vk-hdr-layer-kwin6-git` from AUR.
-* Use app that supports HDR, for example `ENABLE_HDR_WSI=1 mpv --vo=gpu-next --target-colorspace-hint --gpu-api=vulkan --gpu-context=wa
-ylandvk "/path/to/video.mkv"`
+* Use app that supports HDR, for example:
+    * **mpv**: `ENABLE_HDR_WSI=1 mpv --vo=gpu-next --target-colorspace-hint --gpu-api=vulkan --gpu-context=waylandvk "/path/to/video.mkv"`
+    * **Firefox**: Set `gfx.wayland.hdr` to `true` in `about:config`.
 * Max out your brightness. The brightness will be limited to brightness you set. (Note that if there is a dark scene in the movie, it might not appear to be getting brighter as you increase the brightness. But if you don't increase it, the bright scenes will be limited.)
 
-Note that using this process you'll be limited to 1000nits SDR brightness. I've also noticed slight banding in dark colors, I'm not sure if it's limitation of the panel, or the setup is incorrect and you don't get full bit depth, or it's just limitation of the media.
+Note: If you are using EDR, you'll be likely limited to 1000nits brightness as that's the declared brightness in SDR mode.
 
 I didn't try to play any HDR games, you can try looking at [this article](https://web.archive.org/web/20240703130440/https://planet.kde.org/xavers-blog-2023-12-18-an-update-on-hdr-and-color-management-in-kwin/), maybe it'll help, maybe it's outdated.
 
