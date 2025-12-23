@@ -104,7 +104,7 @@ Follow these steps to get proper HDR support.
 * Right-click on desktop -> Display settings:
     * Check the `Enable EDR` or `Enable HDR` setting. (Which one you see depends on if you applied [HDR fix](#hdr-fix).)
     * Verify that colour resolution is set to 10bit (the `Limit color resolution to` field).
-    * If you enabled HDR, I recommend using the "Calibrate HDR Brightness" wizard. I've set the maximum brightness to 2000 and SDR Brightness to 1000.
+    * If you enabled HDR, I recommend using the "Calibrate HDR Brightness" wizard. I've set both settings to 1600.
 * Install `vk-hdr-layer-kwin6-git` from AUR.
 * Use app that supports HDR, for example:
     * **mpv**: `ENABLE_HDR_WSI=1 mpv --vo=gpu-next --target-colorspace-hint --gpu-api=vulkan --gpu-context=waylandvk "/path/to/video.mkv"`
