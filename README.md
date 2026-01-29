@@ -1,8 +1,10 @@
-# Running Garuda Linux on Lenovo Yoga Pro 9 16IAH10 (83L0002YCK)
+# How to run Garuda Linux on Lenovo Yoga Pro 9 gen 10
 
 This repo documents my experience with Lenovo Yoga Pro 9 laptop on Linux and tips to make it work.
 
-I plan to update this guide if I figure more things, this is always work in progress, if you have some more tips, let me know.
+Model: **16IAH10 (83L0002YCK)**
+
+I plan to update this guide if I figure more things, this is always work in progress, if you have some more tips, let me know (by e-mail or using the "Discussions" feature).
 
 ## Distro
 
