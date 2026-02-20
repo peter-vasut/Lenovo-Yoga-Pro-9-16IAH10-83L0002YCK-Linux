@@ -101,6 +101,9 @@ Follow these steps to get proper HDR support.
 
 (Thanks goes to *agnostic* from Arch Linux forums, as the fix is heavily inspired by their [post](https://bbs.archlinux.org/viewtopic.php?pid=2277349#p2277349).)
 
+> [!WARNING]  
+> After doing this fix, using HDMI does not work for me. I'm not sure if it's because of EDID fix, which I'm assuming should be applied only to internal display. Just disabling HDR didn't help. If you encounter this issue, you can temporarily remove the boot option and test again. If I figure out how to fix this, I'll update this guide.
+
 #### How to watch HDR content
 
 * Right-click on desktop -> Display settings:
@@ -116,7 +119,8 @@ Follow these steps to get proper HDR support.
     * **Firefox**: Set `gfx.wayland.hdr` to `true` in `about:config`.
 * Max out your brightness. The brightness will be limited to brightness you set. (Note that if there is a dark scene in the movie, it might not appear to be getting brighter as you increase the brightness. But if you don't increase it, the bright scenes will be limited.)
 
-Note: If you are using EDR, you'll be likely limited to 1000nits brightness as that's the declared brightness in SDR mode.
+> [!NOTE]
+> If you are using EDR, you'll be likely limited to 1000nits brightness as that's the declared brightness in SDR mode.
 
 I didn't try to play any HDR games, you can try looking at [this article](https://web.archive.org/web/20240703130440/https://planet.kde.org/xavers-blog-2023-12-18-an-update-on-hdr-and-color-management-in-kwin/), maybe it'll help, maybe it's outdated.
 
