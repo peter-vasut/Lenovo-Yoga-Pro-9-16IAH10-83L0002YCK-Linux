@@ -109,7 +109,13 @@ Follow these steps to get proper HDR support.
 * Right-click on desktop -> Display settings:
     * Check the `Enable EDR` or `Enable HDR` setting. (Which one you see depends on if you applied [HDR fix](#hdr-fix).)
     * Verify that colour resolution is set to 10bit (the `Limit color resolution to` field).
-    * If you enabled HDR, I recommend using the "Calibrate HDR Brightness" wizard. I've set both settings to 1600.
+    * If you enabled HDR, I recommend using the "Calibrate HDR Brightness" wizard:
+        * First slider: Sets maximum creen brightness. I don't see reason to choose anything other than 1600 nits. At this brightness you should start to see fully white square. (Note that sometimes the calibration square glitched for me and became completely white only at the end of the slider. If that happens, it's probably a bug, just ignore it and set 1600.)
+        * Second slider: Sets reference white or "**paper white**" and max SDR brightness. Note that this value (in nits) will be normally multiplied by your screen brightness. This (multiplied) "reference white" will be used as brightness of pure white in SDR content, and it'll be used to make HDR content brighter or darker. If you want to watch movies exactly as authors mastered them, you'll want this reference white to be set to 203nits per BT.2408 standard. (If you set it to this value, the display will behave exactly as on Windows, or as many televisions. Windows doesn't allow you to change brightness of HDR content.) The logic behind allowing you to change this value is that you might not be in reference viewing environment, so you might want to adjust the brightness to your liking. You can set this slider in calibration to 1015nits, and you'll know that if you ever want to get to 203nit reference, you just need to set brightness of the screen to 20% using keyboard shortcuts (without going into the calibration dialog). If you are in sunny day, you can crank the brightness up.
+        * There is also checkbox, that I suppose enables the Windows behavior for the Windows apps.
+        * Further reading:
+           * [discussion](https://bugs.kde.org/show_bug.cgi?id=499934) (note that it got sometimes quite heated, it might not be worth reading all of it)
+           * [Blog post](https://zamundaaa.github.io/colormanagement/2025/03/31/about-brightness.html) that discusses how the HDR in KDE works in more detail. I recommend reading this (although I don't agree with the sentiment that using reference brightness is completely useless).
 * Install `vk-hdr-layer-kwin6-git` from AUR.
 * Use app that supports HDR, for example:
     * **mpv**: `mpv --hwdec=vaapi --target-trc=pq"/path/to/video.mkv"`
