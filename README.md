@@ -122,8 +122,6 @@ Follow these steps to get proper HDR support.
         * `--hwdec=vaapi`: `mpv` uses this anyway, it just prints errors without this.
         * `--target-trc=pq`: For some reason by default `mpv` uses `pq` transfer function when display brightness is less than 100%, and `linear` otherwise. When using `linear` transfer, the image looks weirdly dithered. I'm not sure if it's bug in `mpv`. If you don't like this behavior, just force `pq` all the time.
         * These options might be useful, although in my experience modern versions of `mpv` have good defaults: `--vo=gpu-next --target-colorspace-hint=yes --gpu-api=vulkan --gpu-context=waylandvk`. You can click the menu button (`☰`) and display "Playback statistics" to see the video output being used.
-    * **Firefox**: Set `gfx.wayland.hdr` to `true` in `about:config`.
-* Max out your brightness. The brightness will be limited to brightness you set. (Note that if there is a dark scene in the movie, it might not appear to be getting brighter as you increase the brightness. But if you don't increase it, the bright scenes will be limited.)
 
 > [!NOTE]
 > If you are using EDR, you'll be likely limited to 1000nits brightness as that's the declared brightness in SDR mode.
