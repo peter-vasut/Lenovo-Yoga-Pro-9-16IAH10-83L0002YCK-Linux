@@ -19,7 +19,7 @@ I'm using **Garuda Linux Dr460nized** gaming edition (KDE). I've tried the non-g
 | Touchpad | 🟢 works (on Garuda) |
 | [Webcam](#webcam) | 🟢 works |
 | Display | 🟢 works |
-| [Touchscreen](#touchscreen) | 🟠 requires kernel patch |
+| Touchscreen | 🟢 works |
 | Brightness control | 🟢 works |
 | [HDR + color management](#hdr-and-color-management) | 🟢 works (HDR requires fix) |
 | [Switchable graphics](#switchable-graphics) | 🟠 pain |
@@ -62,12 +62,6 @@ Backlight is adjustable in software. Under the "brightness icon" on top statusba
 ### Webcam
 
 If the webcam shows just black image, verify that the hardware privacy switch located on right side of the laptop is in correct position.
-
-### Touchscreen
-
-By default there are no touchscreens detected. Kernel 6.17.9, does not work with the touchscreen.
-
-You can install [patch](https://bugzilla.kernel.org/show_bug.cgi?id=220567) using [this](https://amini-allight.org/post/patching-the-arch-linux-kernel) tutorial. The process itself is straight-forward, but the patch is for older kernel version, so you might need to modify it. If you are not programmer, you should probably wait untill the patch is merged.
 
 ### HDR and color management
 
